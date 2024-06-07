@@ -70,6 +70,7 @@ function install_ubuntu_x86_packages {
 function install_ubuntu_x86_minimal_packages {
     BASE_PACKAGES="openhd-sys-utils openhd apt-transport-https apt-utils rtl8812au-x86 rtl88x2bu-x86 nano firmware-realtek"
     PLATFORM_PACKAGES="wireless-tools net-tools gstreamer1.0-qt5"
+    PLATFORM_PACKAGES_HOLD="grub-efi-amd64-bin grub-efi-amd64-signed linux-generic linux-headers-generic linux-image-generic linux-libc-dev"
     PLATFORM_PACKAGES_REMOVE=""
 }
 
