@@ -12,7 +12,7 @@ function install_x20_packages {
     sudo apt install -y firmware-realtek
     rm -Rf /etc/apt/sources.list.d/*
     rm -Rf /etc/apt/sources.list
-    BASE_PACKAGES="openhd-x20 encode-sunxi openhd-sys-utils rtl8812au-x20"
+    BASE_PACKAGES="openhd-x20 encode-sunxi openhd-sys-utils rtl8812au-x20 linux-firmware"
     PLATFORM_PACKAGES_REMOVE="*boost* locales guile-2.2-libs network-manager"
     PLATFORM_PACKAGES=""
 }
@@ -68,7 +68,7 @@ function install_ubuntu_x86_packages {
     PLATFORM_PACKAGES_REMOVE=""
 }
 function install_ubuntu_x86_minimal_packages {
-    BASE_PACKAGES="openhd-sys-utils openhd apt-transport-https apt-utils rtl8812au-x86 rtl88x2bu-x86 nano firmware-realtek"
+    BASE_PACKAGES="openhd-sys-utils openhd apt-transport-https apt-utils rtl8812au-x86 rtl88x2bu-x86 nano linux-firmware"
     PLATFORM_PACKAGES="wireless-tools net-tools gstreamer1.0-qt5"
     PLATFORM_PACKAGES_HOLD="grub-efi-amd64-bin grub-efi-amd64-signed linux-generic linux-headers-generic linux-image-generic linux-libc-dev"
     PLATFORM_PACKAGES_REMOVE=""
