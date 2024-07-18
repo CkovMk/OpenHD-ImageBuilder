@@ -10,6 +10,7 @@ set -e
 # X20 specific code
 function install_x20_packages {
     #sudo apt install -y firmware-realtek NEEDS FIXING
+    sudo apt install -y whiptail
     rm -Rf /etc/apt/sources.list.d/*
     rm -Rf /etc/apt/sources.list
     BASE_PACKAGES="openhd-x20 encode-sunxi openhd-sys-utils rtl8812au-x20"
@@ -33,7 +34,7 @@ function install_radxa-ubuntu_packages {
 
 function install_radxa-debian_packages {
     BASE_PACKAGES="openhd-sys-utils openhd qopenhd-rk3588 apt-transport-https apt-utils open-hd-web-ui"
-    PLATFORM_PACKAGES_HOLD="8852bu-dkms 8852be-dkms task-rockchip radxa-system-config-rockchip linux-image-rock-5a linux-image-5.10.110-6-rockchip linux-image-5.10.110-11-rockchip"
+    PLATFORM_PACKAGES_HOLD="task-rk356x task-rockchip radxa-system-config-rockchip 8852bu-dkms 8852be-dkms task-rockchip radxa-system-config-rockchip linux-image-rock-5a linux-image-5.10.110-6-rockchip linux-image-5.10.110-11-rockchip"
     PLATFORM_PACKAGES_REMOVE="sddm plymouth plasma-desktop kde*"
     PLATFORM_PACKAGES="net-tools linux-headers-5.10.110-radxa-rockchip linux-image-5.10.110-radxa-rockchip rockchip-iq-openhd-r5 rsync procps mpv camera-engine-rkaiq mpp-rk3566 fpv-rk3566"
 }
