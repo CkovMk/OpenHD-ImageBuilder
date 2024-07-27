@@ -203,6 +203,11 @@ else
 echo "This image can't be shrunken"
 fi
 
+# Adding FAT32 Video Partition
+sudo chmod +x ${SCRIPT_DIR}/uPart.sh
+${SCRIPT_DIR}/uPart.sh -v ${PREV_WORK_DIR}/*.img
+
+
 # rename the image according to the build date, the builder/openhd repo versions
 if [ -e "${WORK_DIR}/openhd_version.txt" ]; then
     OPENHD_VERSION=$(cat "${WORK_DIR}/openhd_version.txt")

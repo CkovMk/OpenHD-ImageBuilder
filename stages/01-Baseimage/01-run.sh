@@ -34,9 +34,9 @@ if [[ "${OS}" != ubuntu-x86 ]] && [[ "${OS}" != debian-X20 ]]; then
     dd if=/dev/zero of=temp.img bs=1 count=1 seek=$DIFFERENCE
     ls -l
 
-
     log "Enlarge the downloaded image"
     cat temp.img >> IMAGE.img
+
 
     if [[ "${OS}" == radxa-debian-rock5a ]] || [[ "${OS}" == radxa-debian-rock5b ]] || [[ "${OS}" == radxa-debian-rock-cm3 ]] || [[ "${OS}" == radxa-debian-rock-cm3-core3566 ]]; then
     echo "resize with parted"
@@ -71,8 +71,7 @@ ${ROOT_OFFSET}
 
 w
 EOF
-
-    fi
+fi
 
 else 
 echo "the image doesn't need to be enlarged, just using it like it is"

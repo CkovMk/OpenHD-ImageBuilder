@@ -15,22 +15,14 @@ if [[ "${OS}" == "radxa-debian-rock5a" ]] || [[ "${OS}" == "radxa-debian-rock5b"
     tree /conf
     #rm /conf/before.txt
     cp /usr/local/share/openhd_misc/before.txt /conf/before.txt
-    cp /usr/local/share/openhd_misc/before.txt /config/before.txt
     #allow offline auto detection of image format
     cp /usr/local/share/openhd_misc/issue.txt /conf/issue.txt
-    cp /usr/local/share/openhd_misc/issue.txt /config/issue.txt
-    cat /opt/additionalFiles/issue-new.txt > /config/issue.txt
     mkdir -p /conf/openhd
-    mkdir -p /config/openhd
-    mkdir -p /boot/openhd
     cp /usr/local/share/openhd_misc/initRock.sh /usr/local/bin/initRock.sh
     touch /conf/config.txt
-    touch /config/config.txt
     #mounting config partition
-    cp -rv /boot/openhd/* /conf/openhd/
-    cp -rv /boot/openhd/* /config/openhd/
-    #rm -Rf /boot/openhd
-    ln -s /config/openhd /boot/openhd
+    cp -rv /config/* /conf
+    rm -Rf /config/*
     #copy overlays from linux kernel into the correct folder
     package_name=$(dpkg -l | awk '/^ii/ && $2 ~ /^linux-image-5\.10\.110-99-rockchip-/{print $2}')
     version=$(echo "$package_name" | cut -d '-' -f 4-)
@@ -60,18 +52,21 @@ fi
 
 if [[ "${OS}" == "radxa-debian-rock-cm3" ]]; then
     systemctl disable dnsmasq
+    sudo touch /etc/growroot-disabled 
     sed -i 's/loglevel=4/loglevel=0/g' /boot/extlinux/extlinux.conf
-    echo 'led_sys.sh off' >> /root/.bashrc
+    # echo 'led_sys.sh off' >> /root/.bashrc
     if [ ! -e emmc ]; then
     #autologin as root
     sudo sed -i 's/^ExecStart=.*/ExecStart=-\/sbin\/agetty --autologin root --noclear %I $TERM/' /lib/systemd/system/getty@.service
     cp /opt/additionalFiles/issue-new.txt /conf/issue.txt
+    echo "remove_packages rsetup-config-first-boot" > /conf/before.txt
+    sudo echo "/dev/mmcblk1p4  /Videos  auto  defaults  0  2" | sudo tee -a /etc/fstab
+    mkdir -p /Videos
     else
     cp /opt/additionalFiles/issue-new.txt /conf/issue.txt
     #autologin as root
     sudo sed -i 's/^ExecStart=.*/ExecStart=-\/sbin\/agetty --autologin root --noclear %I $TERM/' /lib/systemd/system/getty@.service
     #autocopy to emmc EXPERIMENTAL
-    echo 'led_sys.sh off' >> /root/.bashrc
     echo "flash_emmc.sh" >> /root/.bashrc
     sudo sed -i 's/console=ttyS2,1500000n8//g' /boot/extlinux/extlinux.conf
     fi
@@ -95,6 +90,10 @@ fi
      # remove preexisting wifi driver for 88xxxu
      rm -Rf /lib/modules/6.1.29-v7l+/kernel/drivers/net/wireless/realtek/rtl8xxxu*
      rm -Rf /lib/modules/6.1.29-v7l/kernel/drivers/net/wireless/realtek/rtl8xxxu*
+     # comment out resize function to use our own resizing
+     sudo sed -i '141,174 s/^/#/' /usr/lib/raspberrypi-sys-mods/firstboot
+     touch /boot/openhd/resize.txt
+     sudo echo "/dev/mmcblk0p3  /Videos  auto  defaults  0  2" | sudo tee -a /etc/fstab
  fi
 
  if [[ "${OS}" == "ubuntu" ]]; then
