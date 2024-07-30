@@ -7,6 +7,9 @@
 
 set -e
 
+CLEANCLEAN=true
+
+
 # X20 specific code
 function install_x20_packages {
     #sudo apt install -y firmware-realtek NEEDS FIXING
@@ -59,6 +62,7 @@ function install_packages-core3566 {
 
 # Ubuntu-x86-specific code
 function install_ubuntu_x86_packages {
+        CLEAN=false
         if [[ "${DISTRO}" == "jammy" ]]; then
         PLATFORM_PACKAGES_HOLD="dkms initramfs-tools grub-pc linux-image-5.15.0-57-generic grub-efi-amd64-signed linux-generic linux-headers-generic linux-image-generic linux-generic-hwe-22.04 linux-image-generic-hwe-22.04 linux-headers-generic-hwe-22.04"
         else
@@ -148,8 +152,9 @@ function install_openhd {
     done
     #Cleapup
     apt autoremove -y
+    if [ "$CLEAN" = true ]; then
     apt upgrade -y --allow-downgrades
-
+    fi
     # Install platform-specific packages
     echo "Installing platform-specific packages..."
     for package in ${BASE_PACKAGES} ${PLATFORM_PACKAGES}; do
