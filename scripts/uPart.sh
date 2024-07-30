@@ -16,13 +16,13 @@ add_fat32_partition() {
   dd if=/dev/zero of=fat.img bs=1M count=300
   cat fat.img >> "${PREV_WORK_DIR}"/*.img
   rm -f fat.img
-  if [[ "${OS}" == "ubuntu-x86-minimal" ]] || [[ "${OS}" == "ubuntu-x86" ]]; then
-    echo "x86 doesn't get a video partition"
+  if [[ "${OS}" == "ubuntu-x86-minimal" ]] || [[ "${OS}" == "ubuntu-x86" ]] || [[ "${OS}" == "debian-x20" ]]; then
+    echo "Video partition not supporte yet"
   elif [[ "${OS}" == "radxa-debian-rock-cm3" ]]; then
     sgdisk -e "${PREV_WORK_DIR}"/*.img
     echo -e "n\n4\n\n\n\n0C00\nw\ny" | sudo gdisk "${PREV_WORK_DIR}"/*.img
     sudo parted "${PREV_WORK_DIR}"/*.img set 4 msftdata on
-    log "Video Partition Added"
+    log "Video partition added"
     local loop_device
     loop_device=$(sudo losetup -f --show -P "${PREV_WORK_DIR}"/*.img)
     sudo mkfs.fat -F 32 "${loop_device}p4"
@@ -33,7 +33,7 @@ add_fat32_partition() {
     first_sec=$((first_sec + (2048 - first_sec % 2048) % 2048))
     sudo parted "${PREV_WORK_DIR}"/*.img --script mkpart primary fat32 "${first_sec}s" 100%
     echo -e "t\n3\n0c\nw" | fdisk "${PREV_WORK_DIR}"/*.img
-    log "Video Partition Added"
+    log "Video partition added"
     local loop_device
     loop_device=$(sudo losetup -f --show -o $((first_sec * 512)) "${PREV_WORK_DIR}"/*.img)
     sudo mkfs.fat -F 32 "${loop_device}"
