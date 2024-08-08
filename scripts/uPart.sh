@@ -34,10 +34,10 @@ add_fat32_partition() {
     sudo parted "${PREV_WORK_DIR}"/*.img --script mkpart primary fat32 "${first_sec}s" 100%
     echo -e "t\n3\n0c\nw" | fdisk "${PREV_WORK_DIR}"/*.img
     log "Video partition added"
-    local loop_device
-    loop_device=$(sudo losetup -f --show -o $((first_sec * 512)) "${PREV_WORK_DIR}"/*.img)
-    sudo mkfs.fat -F 32 "${loop_device}"
-    sudo losetup -d "${loop_device}"
+    # local loop_device
+    # loop_device=$(sudo losetup -f --show -o $((first_sec * 512)) "${PREV_WORK_DIR}"/*.img)
+    # sudo mkfs.fat -F 32 "${loop_device}"
+    # sudo losetup -d "${loop_device}"
   fi
 }
 
