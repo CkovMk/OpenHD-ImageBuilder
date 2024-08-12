@@ -14,7 +14,7 @@ if [[ "${OS}" == "radxa-debian-rock5a" ]] || [[ "${OS}" == "radxa-debian-rock5b"
     #fix uart bug
     sudo sed -i -E 's/console=[^ ]*//g' /boot/extlinux/extlinux.txt
     sudo sed -i -E 's/\s+/ /g' /boot/extlinux/extlinux.txt
-
+    cat /boot/extlinux/extlinux.txt
 
     cp /usr/local/share/openhd_misc/before.txt /conf/before.txt
     #allow offline auto detection of image format
