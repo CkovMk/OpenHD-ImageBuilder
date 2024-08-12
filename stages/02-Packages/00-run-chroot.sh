@@ -88,8 +88,7 @@ function clone_github_repos {
 }
 
 function install_openhd {
-
-        apt install libpoco-dev -y
+        apt update && apt install libpoco-dev -y
     if [[ "${OS}" == "debian-X20" ]]; then
         rm -Rf /etc/apt/sources.list.d/armbian.list
         apt update
