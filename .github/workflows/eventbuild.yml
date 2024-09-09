@@ -4,6 +4,7 @@ on:
   push:
    branches:
       - "2.6-evo"
+      - "2.6-evo-pi-arm64"
       - "dev-release"
       - "release"
       - "debug"
